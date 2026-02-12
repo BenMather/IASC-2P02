@@ -102,6 +102,13 @@ sphereFolder
     .step(0.1)
     .name('Distance')
 
+sphereFolder
+    .add(testSphere.scale, 'x')
+    .min(0.1)
+    .max(10)
+    .step(0.1)
+    .name('scale x')
+
 /**********
 ** ANIMATION LOOP
 **********/
