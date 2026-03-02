@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Assignment 1</title>
+
+    <!-- three.js importmap-->
+    <script type="importmap">
+    {
+        "imports": {
+        "three": "https://ga.jspm.io/npm:three@0.182.0/build/three.module.js",
+        "OrbitControls": "https://ga.jspm.io/npm:three@0.182.0/examples/jsm/controls/OrbitControls.js",
+        "lil-gui": "https://ga.jspm.io/npm:lil-gui@0.21.0/dist/lil-gui.esm.js"
+        }
+    }
+    </script>
+
+    <!-- css stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- three.js scene -->
+    <script src="script.js" type="module"></script>
+
+</head>
+
+<body>
+    <div class="flexbox">
+        <!-- ESSAY -->
+         <div class="essay"> 
+            <h2>1. Flatness</h2>
+            <p><span class="clickable" id="part-one">From inside the cave...</span></p>
+
+            <p>On the cave wall are two shadows. One, a squiggly & winding mess of lines with no discernable start or end. 
+                From within the cave, it's hard to discern what this object might be. Next to it, a round & capsule shaped object. 
+                <span class="clickable" id="first-change">Suddenly, the lines start to move.</span>
+                Crossing over each other and looping around, it almost seems living. 
+                Viewing it from inside the cave, one might see it like a snake slithering around on the ground. Is it living? 
+                With that context, the shape to the left starts to become more familiar, resembling the shape of an egg. 
+                <span class="clickable" id="second-change">Now, the lines start to move left to right, from one side of the cave wall to the other. </span>
+                Is it being protective of the egg? Inside the cave, the snake-like figure brushes against the sides of the cave wall, small parts of it blending into the darkness. 
+                Is it hugging the end of the wall? Or hanging off, just above nothingness? It may look like the creature slithering around its egg, 
+                scanning for any threats, or possibly looking for food. But how do we know this is a snake? What if it's something else entirely? </p>
+                
+
+            <p>“Flatness” is a state with only one point of view. Everything can be seen from one angle only, meaning the viewer is only able to draw a very limited number of conclusions. 
+                It essentially means being unable to “think outside of the box” or implement other points of view into your thought process. 
+                So, the conclusions you come to may be incomplete as you are missing context to the subject. But you cannot see that extra context, because it requires a different perspective you don't have. 
+                In the cave the worldview is completely flat. There is only one plane, the two-dimensional plane, in which anything can be seen. 
+                As a result, everything shows up as lines and two-dimensional shapes. From within the cave, no textures, colours, and even many shapes are not discernible. 
+                For example, a sphere will show up in the cave only as a circle, because depth and shading are not concepts that can be viewed through the cave wall’s shadows. 
+                The shadows can only be black, so no light or other clues will be projected onto the wall. So, for the people in the cave this object cannot be many other things, 
+                and without outside opinion their points of view will only build on this idea.</p>
+        
+            <h2>2. Seeing Double</h2>
+            <p><span class="clickable" id="part-two">From outside the cave...</span></p>
+
+            <p>Outside of the cave is an abstract sculpture, erected just next to a highway. The sun beats down on the sculpture all day, casting shadows that change as the sun moves. 
+                <span class="clickable" id="third-change">And as the day ends, the sun sets, and the shadow moves.</span> On the cave wall, the shadow moves towards the top, following as the sun moves towards the bottom of the horizon. 
+                Outside the cave, what is seen is simply a darkening landscape, with a statue in the distance. 
+                <span class="clickable" id="fourth-change">But as it becomes darker, the highway becomes lit up with the lights of cars passing by, hitting the sculpture as they go. </span>
+                And just like the sun moving down had brought the shadow up on the wall, the cars going from left to right cause movements as well. 
+                The shadow moves from one side of the wall to the other repeatedly as each headlight passes, briefly disappearing in-between cars. 
+                Because the statue sits higher compared to the highway, and the car headlights are lower, the lights keep its shadow at the top of the cave wall even after the sun has set. 
+                Outside the cave, the setting is simply a night-time highway, with a statue next to it. </p>
+
+            <p>“Seeing Double” means being able to view something from (at least) two different points of view. 
+                This allows the viewer to expand on their understanding of the subject, as a second perspective reveals features that were not yet visible. 
+                This concept isn't limited to physical objects, it's the idea of approaching something with multiple perspectives using these perspectives together to piece together the full picture. 
+                Outside of the cave, the sun sets, causing the shadows to move up to the top of the cave wall. Outside the cave, people just see the setting sun. 
+                Inside, the shadow moves up the wall and disappears as it moves, so the people inside the cave may believe it is hanging off of the edge of Earth, maybe holding onto the egg, as almost all of the shadow has vanished. 
+                Outside, cars become lights passing along the highway, the setting that people outside will see. Inside, the small shadow left at the top of the cave wall begins to move quickly from one side to the other, disappearing and re-appearing. 
+                Seeing the shadow moving in and out of the cave wall, the people inside might think this is a result of touching what lies outside of the Earth's boundaries, discouraging them from venturing outside themselves. 
+                These two scenes are connected through light. The sun gives light to everyone outside, the same way it gives light to those in the cave, even if it is limited. 
+                And when the sun is gone, the people outside use their car's headlights to light the way for themselves. By doing this, they inadvertently give light to the cave as well. 
+                Where there is light outside the cave, there will be light inside the cave.</p>
+         </div>
+        
+        <!-- SCENE -->
+         <div class="scene">
+            <canvas class="webgl"></canvas>
+         </div>
+        
+    </div>
+</body>
