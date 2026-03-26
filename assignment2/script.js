@@ -50,7 +50,7 @@ const camera = new THREE.PerspectiveCamera(
     100
 )
 scene.add(camera)
-camera.position.set(0, 12, -20)
+camera.position.set(0, 0, -22)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -70,6 +70,11 @@ const controls = new OrbitControls(camera, canvas)
 
 const directionalLight = new THREE.DirectionalLight(0x404040, 100)
 scene.add(directionalLight)
+
+// Ambient light
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambientLight)
 
 /*****
 * MESHES *
@@ -97,8 +102,33 @@ const drawCube = (height, params) =>
     cube.scale.x = params.scale
     cube.scale.z = params.scale
     cube.scale.y = params.scale
+    
 
 
+    // Group 2 spheres
+    if (params.isSphere) {
+    const sphereGeometry = new THREE.SphereGeometry(0.25, 16, 16);
+    const material = new THREE.MeshStandardMaterial({
+        color: new THREE.Color(params.color)
+    });
+    const sphere = new THREE.Mesh(sphereGeometry, material);
+
+    // position & scale from cube code
+    sphere.position.x = (Math.random() - 0.5) * params.diameter;
+    sphere.position.z = (Math.random() - 0.5) * params.diameter;
+    sphere.position.y = height - 13;
+
+    sphere.scale.x = params.scale
+    sphere.scale.z = params.scale
+    sphere.scale.y = params.scale
+
+    // Add to group
+    params.group.add(sphere);
+
+    return; // exit function early so we don’t also add a cube
+}
+
+    
     // randomize cube rotation
     if(params.randomized){
         cube.rotation.x = Math.random() * 2 * Math.PI
@@ -109,11 +139,6 @@ const drawCube = (height, params) =>
     // Add cube to group
     params.group.add(cube)
 }
-
-//drawCube(0, 'red')
-//drawCube(1, 'yellow')
-//drawCube(2, 'green')
-//drawCube(3, 'blue')
 
 /****
  * UI
@@ -133,36 +158,43 @@ const group3 = new THREE.Group()
 scene.add(group3)
 
 const uiObj = {
-    sourceText: "The quick brown fox jumped over the lazy dog.",
+    sourceText: "",
     saveSourceText() {
         saveSourceText()
     },
     term1: {
-        term: 'fox',
-        color: '#aa00ff',
-        diameter: 10,
+        term: 'witch',
+        color: '#4c0061',
+        diameter: 15,
+        dynamicCubes: false,
         group: group1,
-        nCubes: 100,
+        isSphere: false,
+        nCubes: 50,
         randomized: true,
         scale: 1
     },
     term2: {
-        term: 'dog',
-        color: '#00ffaa',
-        diameter: 10,
+        term: 'wizard',
+        color: '#00ff5e',
+        diameter: 5,
+        dynamicCubes: false,
         group: group2,
-        nCubes: 100,
+        isSphere: true,
+        nCubes: 50,
         randomized: true,
-        scale: 1
+        scale: 1.7
     },
     term3: {
-        term: '',
+        term: 'home',
         color: '',
-        diameter: 10,
+        diameter: 15,
+        dynamicCubes: true,
         group: group3,
-        nCubes: 100,
+        isSphere: true,
+        nCubes: 10,
         randomized: true,
-        scale: 1
+        scale: 1.3
+
     },
 
     saveTerms() {
@@ -197,12 +229,6 @@ const saveTerms = () =>
     visualizeFolder.hide()
     cameraFolder.show()
 
-    //console.log(uiObj.term1)
-    //console.log(uiObj.color1)
-    //console.log(uiObj.term2)
-    //console.log(uiObj.color2)
-    //console.log(uiObj.term3)
-    //console.log(uiObj.color3)
 
     // text analysis
     findSearchTermInTokenizedText(uiObj.term1)
@@ -296,27 +322,25 @@ const tokenizeSourceText = (sourceText) =>
 // Find searchTerm in tokenizedText
 const findSearchTermInTokenizedText = (params) =>
 {
-    // for loop to go thru tokenizedText array
-    for (let i = 0; i < tokenizedText.length; i++)
-    {
-        // If tokenizedText[i] matches search term, we draw a cube
-        if(tokenizedText[i] === params.term){
-            // convert i into height (value between 0 - 20)
-            const height = (100 / tokenizedText.length) * i * 0.2
+    for (let i = 0; i < tokenizedText.length; i++) {
+    if (tokenizedText[i] === params.term) {
 
-            // call drawCube function 100 times using converted height value
-            for(let a = 0; a < params.nCubes; a++)
-            {
-                drawCube(height, params)
-            }
+        const normalizedHeight = i / (tokenizedText.length - 1);
+
+        const height = normalizedHeight * 20;
+
+        // Dynamic cube amounts / more cubes at top
+        let nCubes = params.nCubes;
+        if (params.dynamicCubes) {
+            nCubes = Math.ceil(params.nCubes * (1 + 3 * normalizedHeight));
+        }
+
+        for (let a = 0; a < nCubes; a++) {
+            drawCube(height, params);
         }
     }
 }
-
-//findSearchTermInTokenizedText("sun", "yellow")
-//findSearchTermInTokenizedText("raining", "blue")
-//findSearchTermInTokenizedText("clouds", "white")
-
+}
 
 /**********
 ** ANIMATION LOOP
@@ -341,6 +365,11 @@ const animation = () =>
         camera.position.y = 5
         camera.lookAt(0, 0, 0)        
     }
+
+    // Choppy rotation for group 1
+
+    const points = 4
+    group1.rotation.y = Math.floor(elapsedTime * points) / points 
 
     // Renderer
     renderer.render(scene, camera)
